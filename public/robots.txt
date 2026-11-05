@@ -1,0 +1,46 @@
+# AIBytz — robots.txt
+# Site: https://aibytz.com
+# Email: hello@aibytz.com
+
+# Allow all bots to crawl public content
+User-agent: *
+Allow: /
+Allow: /services
+Allow: /ai-employees
+Allow: /about
+Allow: /contact
+Allow: /privacy
+Allow: /terms
+Allow: /cookies
+Allow: /disclaimer
+
+# Disallow admin and private areas
+Disallow: /admin
+Disallow: /*.json$
+Disallow: /*.env*
+
+# Crawl delay for heavy bots
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://aibytz.com/sitemap.xml
+
+# Specific rules for search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Block bad actors
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /

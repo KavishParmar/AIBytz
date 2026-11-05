@@ -1,0 +1,251 @@
+# AIBytz — Complete Reference
+
+> AI automation studio. One engineer + AI agents building AI employees, custom automations, and intelligent chatbots. Shipping at agency speed. Startup costs.
+
+---
+
+## Who we are
+
+AIBytz is an AI automation studio run by **one AI engineer backed by a fleet of specialized AI agents**. We don't hire humans; we deploy AI.
+
+**The model**: One engineer (full context, every decision, every conversation) + six AI agents (Builder, Researcher, Designer, Strategist, Deployer, Optimizer) = agency-scale execution with zero coordination cost.
+
+**The math**: What used to take a 10-person team and 3 months now takes 1 engineer and 2-3 weeks. Same quality. Fraction of the cost.
+
+### The founder
+
+**Kavish Parmar** — Founder & AI Engineer
+- Handles every client from first call to launch
+- Understands AI at its deepest level
+- One person with full context = no handoffs, no miscommunication
+- Backed by a team of AI agents that never sleep, never forget, never have bad days
+- Instagram: https://www.instagram.com/thesilentfounder.build/
+
+### The AI team
+
+1. **Builder** — Writes code, builds systems, implements architecture
+2. **Researcher** — Analyzes markets, data, and user behavior
+3. **Designer** — Crafts interfaces, UX, and visual systems
+4. **Strategist** — Plans architecture, flow, and optimization
+5. **Deployer** — Ships systems live, manages deployments
+6. **Optimizer** — Tests, monitors, improves results
+
+All work in parallel, 24/7, getting better every week.
+
+---
+
+## What we do
+
+### 1. AI-Powered Custom Automations
+
+**Problem**: Businesses lose hours every week to repetitive, manual tasks.
+
+**Solution**: Custom automation systems that run 24/7. Built specifically for your workflow, not a template.
+
+**What we automate**:
+- CRM & Pipeline Syncing — Leads flow automatically, no manual entry
+- Operations & Backend Workflows — Data moves through your systems without touch
+- Data Entry & Report Generation — Forms filled, reports built, all automated
+- Email & Follow-Up Sequences — Drip campaigns triggered by behavior, no manual sending
+- Custom integrations — Your tools talk to each other automatically
+
+**Result**: Your team stops doing busywork. They focus on closing deals, serving customers, growing the business.
+
+---
+
+### 2. Pre-Trained AI Employees
+
+**Problem**: Hiring full-time staff is expensive. Finding good people is hard. Training takes months.
+
+**Solution**: Deploy a pre-trained AI employee that's ready on day one. Trained on your data. Handles real conversations. Works 24/7.
+
+**AI Employee roles we fill**:
+- **Sales Assistant** — Qualifies leads, books calls, answers objections
+- **Support Agent** — Handles customer questions, resolves issues, escalates when needed
+- **Appointment Scheduler** — Books meetings, sends reminders, reschedules
+- **Lead Qualifier** — Scores inbound leads, disqualifies bad fits, prioritizes hot leads
+
+**What they do**:
+- Handle inbound calls and messages
+- Qualify and score leads in real-time
+- Manage appointments and follow-ups
+- Answer questions about your product/service
+- Escalate complex issues to your team
+- Work 24/7 across phone, WhatsApp, email, chat
+
+**Result**: Your team gets pre-filtered, warm leads. Customer service runs without you. Sales moves on autopilot.
+
+---
+
+### 3. AI Chatbots & Web Integration
+
+**Problem**: Visitors land on your site with questions. You miss the sale because there's no one to answer them.
+
+**Solution**: Smart chatbots embedded in your website, WhatsApp, Instagram, or knowledge base. Trained on your products and services. Answer questions. Capture leads.
+
+**Where we deploy**:
+- Website Live Chat Widgets — Instant answers, zero response time
+- WhatsApp & Instagram Bots — Meet customers where they are
+- Knowledge-Base Assistants — Search your documentation, answer support questions
+- Multi-Channel Integration — One bot, every channel
+
+**What they do**:
+- Answer product/service questions in real-time
+- Guide visitors through your offering
+- Capture lead information
+- Qualify inbound inquiries
+- Collect feedback and NPS
+- Hand off warm conversations to your team
+- Learn and improve from every interaction
+
+**Result**: More conversions. Fewer support tickets. Leads captured 24/7.
+
+---
+
+## How we work
+
+### The process
+
+**Step 1: Discovery Call** (15 minutes)
+- We learn how your business actually runs
+- Where time gets wasted, what's manual, what's broken
+- No pitch deck. Just questions and listening.
+
+**Step 2: Map & Design**
+- We map out which tasks to automate or which AI employee role to deploy
+- We design the exact workflow, bot conversation, or automation system
+- Custom to your business. Not templates. Not off-the-shelf.
+
+**Step 3: Build & Test**
+- Everything gets built end-to-end
+- Connected to your tools (CRM, WhatsApp, Slack, email, whatever you use)
+- Tested with real scenarios before it goes live
+- Edge cases handled, performance optimized
+
+**Step 4: Launch & Optimize**
+- Your AI system goes live
+- We monitor performance in real-time
+- Fix issues, tune behavior, optimize outcomes
+- Keeps running and improving
+
+**Timeline**: 2–3 weeks from discovery to live.
+
+---
+
+## Why the model works
+
+### One engineer means:
+- **Full context** — Every decision rooted in deep understanding of your business
+- **No handoffs** — No miscommunication between teams
+- **One vision** — Coherent, clean execution
+- **Direct relationship** — You talk to the person building your system
+- **Speed** — Decisions made instantly, no meetings, no layers
+
+### AI agents mean:
+- **Infinite capacity** — Code written 24/7, no limits on hours
+- **No bad days** — Consistent quality, no fatigue, no mistakes from distraction
+- **Parallel work** — Builder, designer, optimizer all work simultaneously
+- **Always improving** — Each project feeds back into better systems
+- **Cost efficiency** — No salaries, benefits, overhead — just the execution
+
+### Together:
+- One person thinking + AI agents executing = 10× the output of traditional agencies
+- Same quality, fraction of the cost, faster delivery
+
+---
+
+## Recent work
+
+- **Fernweh Coffee Roasters** — E-commerce automation (2025)
+- **Kellerman & Voss Law** — Brand site + lead capture (2025)
+- **Otterly Kids** — Shopify build + chat integration (2024)
+- **Basalt Studio Architects** — Portfolio + inquiry automation (2024)
+
+---
+
+## Pages & routes
+
+### Public pages
+- **/** — Home (hero, services overview, process, work, advantages, FAQ)
+- **/services** — All services (3 core offerings with detailed descriptions)
+- **/services/:slug** — Individual service deep-dive
+- **/ai-employees** — Gallery of 8 AI employee roles
+- **/ai-employees/:slug** — Individual AI employee profile
+- **/about** — Studio story, the model, team stats, why one engineer
+- **/contact** — Book a free 30-min strategy call
+
+### Legal pages
+- **/privacy** — Privacy Policy (data collection, usage, rights)
+- **/terms** — Terms of Service (usage agreement, liability limits)
+- **/cookies** — Cookie Policy (cookie usage and management)
+- **/disclaimer** — Disclaimer (AI output accuracy, limitation of liability)
+
+### Admin (protected)
+- **/admin/login** — Admin login
+- **/admin** — Dashboard (inquiry management, analytics, settings)
+
+---
+
+## Contact & engagement
+
+**Email**: hello@aibytz.com
+**Instagram**: https://www.instagram.com/thesilentfounder.build/
+**Website**: https://aibytz.com
+
+**How to engage**:
+1. Visit aibytz.com and fill out the contact form
+2. Book a free 30-minute strategy call on the contact page
+3. Or email hello@aibytz.com directly
+
+**What happens next**:
+- 15-minute discovery call (no sales pitch, just questions)
+- Custom proposal based on your needs
+- If you're interested, we start building immediately
+
+---
+
+## Technical stack
+
+- **Frontend**: React, Framer Motion, Tailwind CSS
+- **Backend**: Vercel API routes, Resend for email
+- **Automation**: n8n, Make (Integromat), custom APIs
+- **AI**: Custom-trained agents (GPT, Claude, specialized models)
+- **Integration**: CRM, WhatsApp, email, Slack, Discord, etc.
+
+---
+
+## Keywords & SEO topics
+
+**Core keywords**: AI automation, AI employees, AI agents, AI chatbots, custom automation, workflow automation, business automation, n8n automation, Make automation, lead capture, chatbot development, WhatsApp bots, AI for small business
+
+**Topic clusters**:
+- AI automation agency, automation studio, AI solutions
+- AI-powered workflows, business process automation
+- Lead capture automation, appointment scheduling
+- Customer support automation, sales automation
+- AI agents for business, AI employees
+- WhatsApp marketing, chatbot integration
+- No-code automation, low-code automation
+- Digital transformation, operational efficiency
+
+---
+
+## Why choose AIBytz
+
+✓ **One engineer, full context** — Your system is built by someone who understands your business deeply, not passed between teams
+
+✓ **AI-powered execution** — Shipped in weeks, not months. Better quality, lower cost
+
+✓ **Custom, not templates** — Every automation, every bot, every agent is built specifically for you
+
+✓ **24/7 operation** — Your systems work around the clock. No downtime, no sleep
+
+✓ **Transparent process** — You see everything happening. Direct communication, no layers
+
+✓ **Long-term support** — We monitor, optimize, and improve your system continuously
+
+---
+
+**Last updated**: 2025
+**Domain**: https://aibytz.com
+**Email**: hello@aibytz.com

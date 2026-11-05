@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/((?!api/|@vite|@react-refresh|src/|node_modules/|[^/]+\\.[a-zA-Z0-9]+$).*)", "destination": "/index.html" }
+  ]
+}

@@ -1,0 +1,57 @@
+# AIBytz
+
+> AI automation studio building AI employees, custom automations, and intelligent chatbots that work 24/7. One engineer backed by AI agents — shipping at agency speed for startup costs.
+
+## What we do
+
+AIBytz builds three core solutions for businesses:
+
+1. **AI-Powered Custom Automations** — Eliminate repetitive work. CRM syncing, data entry, report generation, email sequences, operations workflows — built custom for how your business runs.
+
+2. **Pre-Trained AI Employees** — Deploy specialized AI agents (Sales Assistant, Support Agent, Appointment Scheduler, Lead Qualifier) that handle real conversations and work around the clock.
+
+3. **AI Chatbots & Web Integration** — Website live chat, WhatsApp bots, Instagram bots, knowledge-base assistants — trained on your specific products and services.
+
+## The difference
+
+Traditional agencies: bloated teams, months of delivery, high cost.
+AIBytz: one AI engineer + AI agents, weeks to ship, 10× faster.
+
+## Pages & Services
+
+- **Home** (https://aibytz.com/) — Overview, hero, services, process, past work, advantages
+- **Services** (https://aibytz.com/services) — Deep dive into all three service offerings
+- **Services Detail** (https://aibytz.com/services/:slug) — Individual service pages
+- **AI Employees** (https://aibytz.com/ai-employees) — Gallery of 8 pre-trained AI agent roles
+- **AI Employee Detail** (https://aibytz.com/ai-employees/:slug) — Deep dive into each agent
+- **About** (https://aibytz.com/about) — Studio story, the model, why one engineer + AI agents
+- **Contact** (https://aibytz.com/contact) — Book a free strategy call
+
+## Legal & Policy
+
+- Privacy Policy: https://aibytz.com/privacy
+- Terms of Service: https://aibytz.com/terms
+- Cookie Policy: https://aibytz.com/cookies
+- Disclaimer: https://aibytz.com/disclaimer
+
+## Process
+
+1. **Discovery Call** — 15 min. We learn how your business runs, where time gets wasted.
+2. **Map & Design** — We design custom AI workflows and automation systems for your needs.
+3. **Build & Test** — Everything connected to your tools (CRM, WhatsApp, email), tested before launch.
+4. **Launch & Optimize** — Live monitoring, performance tuning, edge-case fixes until it runs perfectly.
+
+## Contact
+
+- **Email**: hello@aibytz.com
+- **Instagram**: https://www.instagram.com/thesilentfounder.build/
+
+## About the founder
+
+**Kavish Parmar** — Founder & AI Engineer. Builds AI employees, automations, and intelligent systems for businesses. One person backed by a fleet of AI agents, shipping at the speed of a full agency.
+
+**AI Team**: Builder, Researcher, Designer, Strategist, Deployer, Optimizer — 6 specialized AI agents working 24/7.
+
+## Keywords
+
+AI automation, AI employees, AI agents, AI chatbots, WhatsApp bots, custom automations, workflow automation, business automation, n8n automation, Make.com automation, lead capture, appointment scheduling, customer support automation, AI-powered workflows, AI solutions for business, AI for small business, automation agency, AI studio.

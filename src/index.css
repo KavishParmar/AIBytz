@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #fdf8ec;
+  --color-ink-soft: #fff4d6;
+  --color-paper: #14121a;
+  --color-vermilion: #ff3b1f;
+  --color-acid: #7ad100;
+  --color-violet: #8b5cff;
+  --color-cobalt: #2b5eff;
+  --color-sunflower: #ffcc33;
+  --color-mist: #6b6678;
+  --color-mist-dark: #a29cae;
+
+  --font-display: "Anton", "Archivo", sans-serif;
+  --font-sans: "Archivo", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --breakpoint-xs: 30rem;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Text on the public site is not selectable — no drag-highlighting or
+     copying. The admin dashboard opts out via the .allow-select class. */
+  html:not(.allow-select) {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  /* Form fields stay selectable, or people cannot edit or paste into them. */
+  input,
+  textarea,
+  select,
+  [contenteditable="true"] {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+
+  ::selection {
+    background: var(--color-vermilion);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-acid);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .text-outline {
+    -webkit-text-stroke: 1.5px var(--color-paper);
+    color: transparent;
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.hero-dots {
+  background-image: radial-gradient(rgba(20, 18, 26, 0.28) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+}
+
+.fan-layout {
+  height: 22rem;
+}
+
+.fan-card {
+  position: absolute;
+  width: 11rem;
+  height: 15.5rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(247, 244, 236, 0.08);
+}
+
+@media (min-width: 30rem) {
+  .fan-layout {
+    height: 26rem;
+  }
+}
+
+@media (min-width: 40rem) {
+  .fan-layout {
+    height: 28rem;
+  }
+  .fan-card {
+    width: 13rem;
+    height: 18.5rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .fan-layout {
+    height: 34rem;
+  }
+  .fan-card {
+    width: 16rem;
+    height: 22.5rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  .fan-layout {
+    height: 38rem;
+  }
+  .fan-card {
+    width: 18rem;
+    height: 25rem;
+  }
+}
+
+.strap-track {
+  animation: strap-scroll 14s linear infinite;
+}
+
+@keyframes strap-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-12.5%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strap-track {
+    animation: none;
+  }
+}
+
+.typewriter-cursor {
+  animation: blink 0.9s steps(1) infinite;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  50.01%, 100% {
+    opacity: 0;
+  }
+}

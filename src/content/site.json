@@ -1,0 +1,196 @@
+﻿{
+  "hero": {
+    "eyebrow": "AIBytz — Est. Digital Craft",
+    "headlineLine1": "We build",
+    "headlineRotations": [
+      { "line2": "bots that", "line3": "bring customers." },
+      { "line2": "automations that", "line3": "work harder." },
+      { "line2": "systems that", "line3": "run themselves." }
+    ],
+    "subhead": "AI Employees & Automations — we automate everything you can think of, we bring results, not just cool products.",
+    "ctaLabel": "See the work"
+  },
+  "services": {
+    "cards": [
+      {
+        "n": "01",
+        "title": "AI-Powered Custom Automations",
+        "description": "Businesses lose hours every week to repetitive tasks. We build custom automation systems that handle your operations around the clock — so your team focuses on what actually matters.",
+        "subheading": "What We Automate",
+        "points": [
+          "CRM & Pipeline Syncing",
+          "Operations & Backend Workflows",
+          "Data Entry & Report Generation",
+          "Email & Follow-Up Sequences"
+        ]
+      },
+      {
+        "n": "02",
+        "title": "Pre-Trained AI Employees",
+        "description": "Deploy AI agents that are ready to work from day one. Trained on your business data, they handle real conversations, qualify leads, and manage appointments — like a new hire that never sleeps.",
+        "subheading": "Roles We Fill",
+        "points": [
+          "AI Sales Assistant",
+          "AI Customer Support Agent",
+          "AI Appointment Scheduler",
+          "AI Lead Qualifier"
+        ]
+      },
+      {
+        "n": "03",
+        "title": "AI Chatbots & Web Integration",
+        "description": "Smart chatbots embedded directly into your website, WhatsApp, or social channels. They answer questions, capture leads, and guide visitors — trained specifically on your products and services.",
+        "subheading": "Where We Deploy",
+        "points": [
+          "Website Live Chat Widgets",
+          "WhatsApp & Instagram Bots",
+          "Knowledge-Base Assistants",
+          "Multi-Channel Integration"
+        ]
+      }
+    ]
+  },
+  "projects": [
+    {
+      "id": "fernweh-coffee-roasters",
+      "name": "Fernweh Coffee Roasters",
+      "tag": "E-commerce",
+      "year": "2025",
+      "color": "bg-vermilion",
+      "span": "sm:col-span-7",
+      "image": ""
+    },
+    {
+      "id": "kellerman-voss-law",
+      "name": "Kellerman & Voss Law",
+      "tag": "Brand site",
+      "year": "2025",
+      "color": "bg-violet",
+      "span": "sm:col-span-5",
+      "image": ""
+    },
+    {
+      "id": "otterly-kids",
+      "name": "Otterly Kids",
+      "tag": "Shopify build",
+      "year": "2024",
+      "color": "bg-acid",
+      "span": "sm:col-span-5",
+      "image": ""
+    },
+    {
+      "id": "basalt-studio-architects",
+      "name": "Basalt Studio Architects",
+      "tag": "Portfolio",
+      "year": "2024",
+      "color": "bg-vermilion",
+      "span": "sm:col-span-7",
+      "image": ""
+    }
+  ],
+  "process": {
+    "steps": [
+      {
+        "n": "01",
+        "title": "Discovery Call",
+        "body": "We learn how your business actually runs — where time gets wasted, what's manual, what's broken. 15 minutes, no pitch deck."
+      },
+      {
+        "n": "02",
+        "title": "Map & Design",
+        "body": "We map out which tasks to automate and design the AI workflows, bots, or agents that fit your operations — not off-the-shelf templates."
+      },
+      {
+        "n": "03",
+        "title": "Build & Test",
+        "body": "We build everything, connect it to your tools (CRM, WhatsApp, email, whatever you use), and test it with real scenarios before anything goes live."
+      },
+      {
+        "n": "04",
+        "title": "Launch & Optimize",
+        "body": "Your AI systems go live. We monitor performance, fix edge cases, and tune the system until it runs like clockwork."
+      }
+    ]
+  },
+  "about": {
+    "eyebrow": "About the studio",
+    "headingLine1": "One engineer.",
+    "headingLine2": "Many agents.",
+    "body": "AIBytz is an AI automation studio run by one AI engineer and a fleet of AI agents. No bloated teams, no layers of management — just one person who understands AI at its deepest level, commanding an army of specialized agents that build, ship, and optimize around the clock.",
+    "teamHeading": "The operator",
+    "teamHeadingBig": "Who runs AIBytz",
+    "showMoreLabel": "Show more",
+    "founder": {
+      "name": "Kavish Parmar",
+      "role": "Founder & AI Engineer",
+      "instagram": "https://www.instagram.com/thesilentfounder.build/",
+      "linkedin": "#",
+      "image": "/kavish image.jpeg",
+      "bio": "AI engineer who builds AI employees, automations, and intelligent systems for businesses. One person — backed by a fleet of AI agents — shipping at the speed of a full agency."
+    },
+    "agents": [
+      { "name": "Builder", "desc": "Writes code, builds systems", "icon": "code" },
+      { "name": "Researcher", "desc": "Analyzes markets & data", "icon": "search" },
+      { "name": "Designer", "desc": "Crafts interfaces & UX", "icon": "palette" },
+      { "name": "Strategist", "desc": "Plans architecture & flow", "icon": "brain" },
+      { "name": "Deployer", "desc": "Ships & monitors live", "icon": "rocket" },
+      { "name": "Optimizer", "desc": "Tests & improves results", "icon": "chart" }
+    ],
+    "stats": [
+      { "value": 1, "label": "Engineer", "suffix": "" },
+      { "value": 6, "label": "AI Agents", "suffix": "+" },
+      { "value": 10, "label": "Speed multiplier", "suffix": "×" },
+      { "value": 0, "label": "Bureaucracy", "suffix": "%" }
+    ]
+  },
+  "aboutPage": {
+    "eyebrow": "About AIBytz",
+    "headingLine1": "One engineer.",
+    "headingRotations": ["Many agents.", "Zero limits.", "Full speed."],
+    "intro": "AIBytz is what happens when one AI engineer stops hiring humans and starts deploying AI agents instead. No meetings, no middlemen, no overhead — just raw execution at machine speed.",
+    "manifesto": {
+      "heading": "The model is simple",
+      "points": [
+        { "title": "One person thinks.", "body": "Every decision, every architecture call, every client conversation — one mind with full context. No handoffs, no lost-in-translation." },
+        { "title": "Agents execute.", "body": "A fleet of AI agents handles the heavy lifting — code, research, design, testing, deployment. They don't sleep, don't forget, and don't have bad days." },
+        { "title": "You get results.", "body": "What used to take a 10-person agency and 3 months now takes one engineer and a few weeks. Same quality, fraction of the cost." }
+      ]
+    },
+    "sections": [
+      {
+        "heading": "Why one engineer?",
+        "body": "Big teams create big overhead. Every extra person means more meetings, more miscommunication, more diluted vision. One engineer with AI agents has zero coordination cost and infinite context."
+      },
+      {
+        "heading": "The AI agent advantage",
+        "body": "Our agents aren't ChatGPT wrappers. They're specialized systems trained on specific tasks — one builds, one researches, one designs, one deploys. They work in parallel, 24/7, and they get better every week."
+      },
+      {
+        "heading": "What this means for you",
+        "body": "You get an AI engineer who actually understands your business, backed by a team that never drops the ball. Faster delivery, lower cost, higher quality — that's the math."
+      }
+    ],
+    "techStack": [
+      { "label": "AI Agents", "detail": "Custom-built fleet" },
+      { "label": "Automation", "detail": "End-to-end pipelines" },
+      { "label": "Deployment", "detail": "Zero-downtime shipping" },
+      { "label": "Monitoring", "detail": "24/7 agent oversight" }
+    ]
+  },
+  "cta": {
+    "eyebrow": "Got an idea?",
+    "headlineLine1": "Let's build",
+    "headlineLine2": "it",
+    "headlineAccent": "",
+    "subhead": "One message is all it takes. Tell us about your project and we'll take it from there.",
+    "primaryCtaLabel": "Start a project",
+    "secondaryCtaLabel": "See our work",
+    "email": "hello@AIBytz.com"
+  },
+  "footer": {
+    "instagram": "https://www.instagram.com/thesilentfounder.build/",
+    "linkedin": "#",
+    "dribbble": "#",
+    "tagline": "Made with coffee."
+  }
+}
