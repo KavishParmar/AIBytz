@@ -6,6 +6,9 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import content from "../content/site.json";
+import { useNavigationTransition } from "../context/NavigationTransition";
+
+const SLUGS = ["ai-automations", "ai-employees", "ai-chatbots"];
 
 const icons = [
   <svg key="ic1" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
@@ -53,7 +56,9 @@ function useViewportWidth() {
   return w;
 }
 
-function CardContent({ card, icon, total }) {
+function CardContent({ card, icon, total, index }) {
+  const { startTransition } = useNavigationTransition();
+  const href = `/services/${SLUGS[index]}`;
   return (
     <>
       <div className="flex items-start justify-between mb-6">
@@ -91,8 +96,12 @@ function CardContent({ card, icon, total }) {
 
       <div className="mt-auto pt-2">
         <a
-          href="#"
-          className="inline-flex items-center gap-1.5 font-display uppercase text-sm tracking-wide text-vermilion hover:gap-3 transition-all duration-300"
+          href={href}
+          onClick={(e) => {
+            e.preventDefault();
+            startTransition(href, card.title);
+          }}
+          className="inline-flex items-center gap-1.5 font-display uppercase text-sm tracking-wide text-vermilion hover:gap-3 transition-all"
         >
           Learn More
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="mt-px">
@@ -221,7 +230,7 @@ function StackCard({ index, card, total, progress, vw }) {
         transformOrigin: "center top",
       }}
     >
-      <CardContent card={card} icon={icons[index]} total={total} />
+      <CardContent card={card} icon={icons[index]} total={total} index={index} />
     </motion.div>
   );
 }
@@ -280,7 +289,7 @@ export default function Services() {
               key={card.n}
               className="w-full sm:w-[calc(50%-12px)] [@media(min-width:1500px)]:w-[calc(33.333%-16px)] max-w-[480px] bg-white rounded-2xl border border-[#e0ddd6] p-7 sm:p-8 flex flex-col hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-shadow duration-300"
             >
-              <CardContent card={card} icon={icons[i]} total={total} />
+              <CardContent card={card} icon={icons[i]} total={total} index={i} />
             </div>
           ))}
         </div>

@@ -1,4 +1,4 @@
-﻿import { Link } from "react-router-dom";
+﻿import { useNavigationTransition } from "../context/NavigationTransition";
 import content from "../content/site.json";
 
 const LEGAL_LINKS = [
@@ -59,6 +59,7 @@ const SOCIALS = [
 ];
 
 export default function Footer() {
+  const { startTransition } = useNavigationTransition();
 
   return (
     <footer className="relative pt-14 sm:pt-20 pb-6 border-t border-white/10 text-ink">
@@ -66,14 +67,21 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 mb-14">
           {/* Left — Brand + tagline + social icons */}
           <div className="md:col-span-5 lg:col-span-4">
-            <a href="https://aibytz.com/" className="font-display text-2xl sm:text-3xl tracking-tight inline-block">
+            <a
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                startTransition("/", "Home");
+              }}
+              className="font-display text-2xl sm:text-3xl tracking-tight inline-block"
+            >
               AIBytz
             </a>
             <p className="text-ink/60 text-sm mt-3 max-w-xs leading-relaxed">
               AI employees and automation for businesses.
             </p>
             <div className="flex items-center gap-3 mt-5">
-              {SOCIALS.map((s) => (
+              {SOCIALS.filter((s) => s.href && s.href !== "#").map((s) => (
                 <a
                   key={s.label}
                   href={s.href}
@@ -95,13 +103,17 @@ export default function Footer() {
             </span>
             {NAV_LINKS.map((link) =>
               link.page ? (
-                <Link
+                <a
                   key={link.label}
-                  to={link.to}
-                  className="font-mono text-xs uppercase tracking-widest text-ink/60 hover:text-vermilion hover:translate-x-1 transition-all duration-200 w-fit"
+                  href={link.to}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    startTransition(link.to, link.label);
+                  }}
+                  className="font-mono text-xs uppercase tracking-widest text-ink/60 hover:text-vermilion hover:translate-x-1 transition-all duration-200 w-fit cursor-pointer"
                 >
                   {link.label}
-                </Link>
+                </a>
               ) : (
                 <a
                   key={link.label}
@@ -122,12 +134,16 @@ export default function Footer() {
             <p className="text-ink/60 text-sm leading-relaxed max-w-xs">
               Ready to automate your business? Let's talk about what's possible.
             </p>
-            <Link
-              to="/contact"
-              className="mt-1 w-fit font-mono text-xs uppercase tracking-widest border border-ink/20 rounded-full px-6 py-3 text-ink/70 hover:bg-vermilion hover:text-ink hover:border-vermilion hover:-translate-y-1 transition-all duration-300"
+            <a
+              href="/contact"
+              onClick={(e) => {
+                e.preventDefault();
+                startTransition("/contact", "Contact");
+              }}
+              className="mt-1 w-fit font-mono text-xs uppercase tracking-widest border border-ink/20 rounded-full px-6 py-3 text-ink/70 hover:bg-vermilion hover:text-ink hover:border-vermilion hover:-translate-y-1 transition-all duration-300 cursor-pointer"
             >
               Start a Project
-            </Link>
+            </a>
           </div>
         </div>
       </div>
@@ -140,13 +156,17 @@ export default function Footer() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
             {LEGAL_LINKS.map((link) => (
-              <Link
+              <a
                 key={link.to}
-                to={link.to}
-                className="font-mono text-[11px] uppercase tracking-widest text-ink/40 hover:text-vermilion transition-colors"
+                href={link.to}
+                onClick={(e) => {
+                  e.preventDefault();
+                  startTransition(link.to, link.label);
+                }}
+                className="font-mono text-[11px] uppercase tracking-widest text-ink/40 hover:text-vermilion transition-colors cursor-pointer"
               >
                 {link.label}
-              </Link>
+              </a>
             ))}
           </div>
         </div>

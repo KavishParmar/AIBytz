@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigationTransition } from "../context/NavigationTransition";
 
 const LINKS = [
   { label: "Services", href: "/services", page: true },
@@ -16,6 +17,7 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { startTransition } = useNavigationTransition();
   const onHome = location.pathname === "/";
   const withHome = (hash) => (onHome ? hash : `/${hash}`);
 
@@ -36,7 +38,11 @@ export default function Nav() {
         }`}
       >
         <a
-          href="https://aibytz.com/"
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            startTransition("/", "Home");
+          }}
           className={`font-display tracking-tight transition-all duration-500 ${
             scrolled ? "text-lg text-paper" : "text-xl sm:text-2xl text-paper"
           }`}
@@ -46,23 +52,35 @@ export default function Nav() {
 
         <div className="hidden md:flex items-center gap-8">
           <nav
-            className={`flex items-center gap-8 font-mono text-xs uppercase tracking-widest font-extrabold transition-colors duration-500 ${
-              scrolled ? "text-paper" : "text-paper"
-            }`}
+            className="flex items-center gap-8 font-mono text-xs uppercase tracking-widest font-extrabold text-paper transition-colors duration-500"
           >
-            {LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.page ? link.href : withHome(link.href)}
-                className="hover:text-vermilion transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
+            {LINKS.map((link) =>
+              link.page ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    startTransition(link.href, link.label);
+                  }}
+                  className="hover:text-vermilion transition-colors cursor-pointer"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <a
+                  key={link.href}
+                  href={withHome(link.href)}
+                  className="hover:text-vermilion transition-colors"
+                >
+                  {link.label}
+                </a>
+              )
+            )}
           </nav>
 
           <button
-            onClick={() => navigate("/contact")}
+            onClick={() => startTransition("/contact", "Contact")}
             className={`inline-flex items-center gap-2 rounded-full text-xs font-mono uppercase tracking-widest transition-all duration-500 ${
               scrolled
                 ? "bg-vermilion text-ink px-4 py-2 hover:bg-vermilion/80"
@@ -80,19 +98,13 @@ export default function Nav() {
           onClick={() => setOpen((v) => !v)}
         >
           <span
-            className={`block h-0.5 w-6 transition-all duration-300 ${
-              scrolled ? "bg-paper" : "bg-paper"
-            } ${open ? "translate-y-2 rotate-45" : ""}`}
+            className={`block h-0.5 w-6 bg-paper transition-all duration-300 ${open ? "translate-y-2 rotate-45" : ""}`}
           />
           <span
-            className={`block h-0.5 w-6 transition-all duration-300 ${
-              scrolled ? "bg-paper" : "bg-paper"
-            } ${open ? "opacity-0" : ""}`}
+            className={`block h-0.5 w-6 bg-paper transition-all duration-300 ${open ? "opacity-0" : ""}`}
           />
           <span
-            className={`block h-0.5 w-6 transition-all duration-300 ${
-              scrolled ? "bg-paper" : "bg-paper"
-            } ${open ? "-translate-y-2 -rotate-45" : ""}`}
+            className={`block h-0.5 w-6 bg-paper transition-all duration-300 ${open ? "-translate-y-2 -rotate-45" : ""}`}
           />
         </button>
       </div>
@@ -109,24 +121,43 @@ export default function Nav() {
           }`}
         >
           <div className="flex flex-col gap-1 px-5 py-4">
-            {LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.page ? link.href : withHome(link.href)}
-                onClick={() => setOpen(false)}
-                className={`py-3 font-mono text-sm uppercase tracking-widest ${
-                  scrolled
-                    ? "text-paper hover:text-vermilion"
-                    : "text-mist hover:text-paper"
-                }`}
-              >
-                {link.label}
-              </a>
-            ))}
+            {LINKS.map((link) =>
+              link.page ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpen(false);
+                    startTransition(link.href, link.label);
+                  }}
+                  className={`py-3 font-mono text-sm uppercase tracking-widest cursor-pointer ${
+                    scrolled
+                      ? "text-paper hover:text-vermilion"
+                      : "text-mist hover:text-paper"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <a
+                  key={link.href}
+                  href={withHome(link.href)}
+                  onClick={() => setOpen(false)}
+                  className={`py-3 font-mono text-sm uppercase tracking-widest ${
+                    scrolled
+                      ? "text-paper hover:text-vermilion"
+                      : "text-mist hover:text-paper"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              )
+            )}
             <button
               onClick={() => {
                 setOpen(false);
-                navigate("/contact");
+                startTransition("/contact", "Contact");
               }}
               className={`mt-2 inline-flex items-center justify-center rounded-full px-5 py-3 text-xs font-mono uppercase tracking-widest ${
                 scrolled

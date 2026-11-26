@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const faqs = [
   {
-    q: "WHAT EXACTLY DOES VAANTAAI BUILD?",
+    q: "WHAT EXACTLY DOES AIBYTZ BUILD?",
     a: "We build AI employees and automation systems for businesses. This includes AI chatbots, WhatsApp bots, lead capture automations, CRM workflows, appointment booking systems, and custom AI agents that handle repetitive tasks so your team can focus on what matters.",
   },
   {
@@ -23,7 +23,7 @@ const faqs = [
     a: "Yes, 100 percent. Every line of code, every workflow, every automation — it all belongs to you from day one. There is no vendor lock-in, no recurring license fees, and no strings attached.",
   },
   {
-    q: "HOW MUCH DOES IT COST TO WORK WITH VAANTAAI?",
+    q: "HOW MUCH DOES IT COST TO WORK WITH AIBYTZ?",
     a: "It depends on the scope of the project. We offer everything from focused single automations to full AI system buildouts. Book a free strategy call and we will give you a clear estimate based on what you actually need — no hidden fees, no upsells.",
   },
   {

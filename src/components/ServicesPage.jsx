@@ -1,5 +1,5 @@
 ﻿import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import TransitionLink from "./TransitionLink";
 import SEO from "./SEO";
 import Nav from "./Nav";
 import Footer from "./Footer";
@@ -129,8 +129,9 @@ function ServiceCard({ service, index }) {
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.55, delay: index * 0.1 }}
     >
-      <Link
+      <TransitionLink
         to={`/services/${service.slug}`}
+        label={service.title}
         className="group flex flex-col bg-white rounded-2xl border border-[#e0ddd6] p-7 sm:p-8 h-full hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300"
       >
         {/* icon + number */}
@@ -176,7 +177,7 @@ function ServiceCard({ service, index }) {
             </svg>
           </span>
         </div>
-      </Link>
+      </TransitionLink>
     </motion.div>
   );
 }
@@ -476,13 +477,14 @@ function ServicesCTA() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex flex-col items-center gap-6"
         >
-          <Link
+          <TransitionLink
             to="/contact"
+            label="Contact"
             className="group relative inline-flex items-center gap-3 rounded-full bg-white text-vermilion px-10 py-5 sm:px-14 sm:py-6 font-mono text-sm sm:text-base uppercase tracking-widest font-bold hover:bg-paper hover:text-ink transition-colors duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.15)]"
           >
             Book a Strategy Call
             <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
-          </Link>
+          </TransitionLink>
 
           <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/50">
             &#9679;&ensp;Available globally&ensp;&#9679;

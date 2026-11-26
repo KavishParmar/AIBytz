@@ -124,7 +124,7 @@
       "name": "Kavish Parmar",
       "role": "Founder & AI Engineer",
       "instagram": "https://www.instagram.com/thesilentfounder.build/",
-      "linkedin": "#",
+      "linkedin": "https://www.linkedin.com/in/kavishparmar/",
       "image": "/kavish image.jpeg",
       "bio": "AI engineer who builds AI employees, automations, and intelligent systems for businesses. One person — backed by a fleet of AI agents — shipping at the speed of a full agency."
     },
@@ -189,8 +189,8 @@
   },
   "footer": {
     "instagram": "https://www.instagram.com/thesilentfounder.build/",
-    "linkedin": "#",
-    "dribbble": "#",
+    "linkedin": "https://www.linkedin.com/in/kavishparmar/",
+    "dribbble": "",
     "tagline": "Made with coffee."
   }
 }

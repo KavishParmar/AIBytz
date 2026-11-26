@@ -12,7 +12,7 @@ const WORDS = [
   "CLAUDE",
   "CHATGPT",
   "KAVISH",
-  "VAANTAAI",
+  "AIBYTZ",
 ];
 
 // --- physics constants (tuned for "heavy object" feel: real fall, small bounce) ---

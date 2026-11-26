@@ -30,7 +30,7 @@ export default function Login() {
         className="w-full max-w-sm rounded-2xl border border-white/10 bg-ink-soft p-8"
       >
         <h1 className="font-display uppercase text-2xl mb-1">
-          WEB<span className="text-vermilion">NEST</span>
+          AI<span className="text-vermilion">Bytz</span>
         </h1>
         <p className="font-mono text-xs uppercase tracking-widest text-mist mb-6">
           Admin access

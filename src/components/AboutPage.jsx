@@ -1,6 +1,6 @@
 ﻿import { useEffect, useState, useRef } from "react";
 import { motion, useReducedMotion, useInView } from "framer-motion";
-import { Link } from "react-router-dom";
+import { useNavigationTransition } from "../context/NavigationTransition";
 import content from "../content/site.json";
 import SEO from "./SEO";
 import Nav from "./Nav";
@@ -238,6 +238,7 @@ function TechStackPills() {
 function AboutPageContent() {
   const { aboutPage, about } = content;
   const reduceMotion = useReducedMotion();
+  const { startTransition } = useNavigationTransition();
   const { text: headingText, isFading, showCursor } = useTypewriterWord(
     aboutPage.headingRotations, reduceMotion
   );
@@ -257,10 +258,14 @@ function AboutPageContent() {
         {/* Hero */}
         <section className="px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 pt-24 sm:pt-32 lg:pt-40 pb-10 sm:pb-16">
           <div className="mx-auto max-w-[1400px]">
-            <Link to="/"
-              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-mist-dark hover:text-mist transition-colors mb-8">
+            <a href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                startTransition("/", "Home");
+              }}
+              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-mist-dark hover:text-mist transition-colors mb-8 cursor-pointer">
               <span aria-hidden>&larr;</span> Back home
-            </Link>
+            </a>
 
             <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.3em] text-vermilion mb-3">
               {aboutPage.eyebrow}

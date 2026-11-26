@@ -192,7 +192,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-ink text-paper">
       <header className="border-b border-white/10 px-6 sm:px-10 py-4 flex items-center justify-between sticky top-0 bg-ink/95 backdrop-blur z-10">
         <h1 className="font-display uppercase text-lg">
-          WEB<span className="text-vermilion">NEST</span> Admin
+          AI<span className="text-vermilion">Bytz</span> Admin
         </h1>
         <div className="flex items-center gap-3">
           <button
@@ -251,8 +251,6 @@ export default function Dashboard() {
             <div>
               <Field label="Eyebrow" value={content.hero.eyebrow} onChange={(v) => updateHero("eyebrow", v)} />
               <Field label="Headline — line 1" value={content.hero.headlineLine1} onChange={(v) => updateHero("headlineLine1", v)} />
-              <Field label="Headline — line 2" value={content.hero.headlineLine2} onChange={(v) => updateHero("headlineLine2", v)} />
-              <Field label="Headline — line 3 (accent)" value={content.hero.headlineLine3} onChange={(v) => updateHero("headlineLine3", v)} />
               <Field label="Subhead" value={content.hero.subhead} onChange={(v) => updateHero("subhead", v)} textarea />
               <Field label="CTA button label" value={content.hero.ctaLabel} onChange={(v) => updateHero("ctaLabel", v)} />
             </div>

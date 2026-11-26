@@ -1,16 +1,17 @@
-﻿import { useRef, useEffect, useState } from "react";
-import { motion, useInView } from "framer-motion";
+﻿import { useRef, useEffect, useState, useCallback } from "react";
+import { motion, useInView, useAnimation } from "framer-motion";
 
 /* ────────────────────────────────────────────────
-   PRIMITIVES
+   PRIMITIVES — all support hover replay via `trigger` prop
 ──────────────────────────────────────────────── */
 
-function Counter({ to, suffix = "", prefix = "", duration = 1600 }) {
+function Counter({ to, suffix = "", prefix = "", duration = 1600, trigger }) {
   const [val, setVal] = useState(0);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
-  useEffect(() => {
-    if (!inView) return;
+
+  const animate = useCallback(() => {
+    setVal(0);
     const start = performance.now();
     const tick = (now) => {
       const t = Math.min((now - start) / duration, 1);
@@ -19,16 +20,25 @@ function Counter({ to, suffix = "", prefix = "", duration = 1600 }) {
       if (t < 1) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
-  }, [inView, to, duration]);
+  }, [to, duration]);
+
+  useEffect(() => {
+    if (inView) animate();
+  }, [inView, animate]);
+
+  useEffect(() => {
+    if (trigger > 0) animate();
+  }, [trigger, animate]);
+
   return <span ref={ref}>{prefix}{val}{suffix}</span>;
 }
 
-/* Smooth curved sparkline with animated draw + fill */
-function Sparkline({ points, color = "#ff3b1f", w = 260, h = 72 }) {
+function Sparkline({ points, color = "#ff3b1f", w = 260, h = 72, trigger }) {
   const ref = useRef(null);
   const pathRef = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const [len, setLen] = useState(800);
+  const [animKey, setAnimKey] = useState(0);
 
   const pad = { t: 8, b: 20, l: 4, r: 4 };
   const W = w - pad.l - pad.r;
@@ -39,7 +49,6 @@ function Sparkline({ points, color = "#ff3b1f", w = 260, h = 72 }) {
   const xs = norm.map((_, i) => pad.l + (i / (points.length - 1)) * W);
   const ys = norm.map((n) => pad.t + H - n * H);
 
-  /* Catmull-Rom to smooth cubic bezier */
   const smooth = xs.map((x, i) => {
     if (i === 0) return `M ${x} ${ys[i]}`;
     const x0 = xs[i - 1], y0 = ys[i - 1];
@@ -55,7 +64,12 @@ function Sparkline({ points, color = "#ff3b1f", w = 260, h = 72 }) {
     if (pathRef.current) setLen(pathRef.current.getTotalLength());
   }, []);
 
-  /* Grid lines */
+  const active = inView || trigger > 0;
+
+  useEffect(() => {
+    if (trigger > 0) setAnimKey((k) => k + 1);
+  }, [trigger]);
+
   const gridY = [0, 0.5, 1].map((t) => pad.t + H - t * H);
 
   return (
@@ -66,76 +80,38 @@ function Sparkline({ points, color = "#ff3b1f", w = 260, h = 72 }) {
           <stop offset="100%" stopColor={color} stopOpacity="0" />
         </linearGradient>
       </defs>
-      {/* Grid */}
       {gridY.map((y, i) => (
         <line key={i} x1={pad.l} y1={y} x2={w - pad.r} y2={y}
           stroke="#14121a" strokeOpacity="0.06" strokeWidth="1" strokeDasharray="3 3" />
       ))}
-      {/* Fill */}
-      <motion.path d={fillPath} fill={`url(#fill-${color.replace("#","")})`}
-        initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
+      <motion.path key={`fill-${animKey}`} d={fillPath} fill={`url(#fill-${color.replace("#","")})`}
+        initial={{ opacity: 0 }} animate={active ? { opacity: 1 } : {}}
         transition={{ delay: 0.4, duration: 0.5 }} />
-      {/* Line */}
-      <motion.path ref={pathRef} d={smooth}
+      <motion.path key={`line-${animKey}`} ref={pathRef} d={smooth}
         stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
         strokeDasharray={len} strokeDashoffset={len}
-        animate={inView ? { strokeDashoffset: 0 } : {}}
+        animate={active ? { strokeDashoffset: 0 } : {}}
         transition={{ duration: 1.4, delay: 0.05, ease: "easeOut" }} />
-      {/* End dot */}
-      <motion.circle cx={xs[xs.length - 1]} cy={ys[ys.length - 1]} r={5} fill={color}
-        initial={{ scale: 0, opacity: 0 }} animate={inView ? { scale: 1, opacity: 1 } : {}}
+      <motion.circle key={`dot-${animKey}`} cx={xs[xs.length - 1]} cy={ys[ys.length - 1]} r={5} fill={color}
+        initial={{ scale: 0, opacity: 0 }} animate={active ? { scale: 1, opacity: 1 } : {}}
         style={{ transformOrigin: `${xs[xs.length - 1]}px ${ys[ys.length - 1]}px` }}
         transition={{ delay: 1.3, duration: 0.3, ease: [0.22, 1, 0.36, 1] }} />
-      {/* Axis labels */}
       <text x={pad.l} y={h - 4} fontSize="7" fill="#14121a" opacity="0.4" fontFamily="JetBrains Mono, monospace">LOW</text>
       <text x={w - pad.r} y={h - 4} fontSize="7" fill="#14121a" opacity="0.4" fontFamily="JetBrains Mono, monospace" textAnchor="end">NOW</text>
     </svg>
   );
 }
 
-/* Animated bar chart with grid + value label on tallest bar */
-function BarChart({ bars, color = "#ff3b1f" }) {
+function FlowViz({ trigger }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
-  const max = Math.max(...bars);
-  return (
-    <div ref={ref} className="relative w-full h-full flex items-end gap-[4px]">
-      {/* Horizontal grid lines */}
-      {[25, 50, 75, 100].map((pct) => (
-        <div key={pct} className="absolute left-0 right-0 border-t border-paper/5"
-          style={{ bottom: `${pct}%` }} />
-      ))}
-      {bars.map((h, i) => {
-        const isPeak = h === max;
-        return (
-          <div key={i} className="flex-1 flex flex-col items-center justify-end h-full relative">
-            {isPeak && inView && (
-              <motion.span
-                initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.07 + 0.6 }}
-                className="absolute -top-5 font-mono text-[9px] font-bold"
-                style={{ color }}
-              >
-                {h}%
-              </motion.span>
-            )}
-            <motion.div
-              className="w-full rounded-t-[3px] origin-bottom"
-              style={{ backgroundColor: isPeak ? color : `${color}70`, height: `${h}%` }}
-              initial={{ scaleY: 0 }} animate={inView ? { scaleY: 1 } : { scaleY: 0 }}
-              transition={{ duration: 0.55, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-            />
-          </div>
-        );
-      })}
-    </div>
-  );
-}
+  const [animKey, setAnimKey] = useState(0);
 
-/* Neural network / flow diagram */
-function FlowViz() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-40px" });
+  useEffect(() => {
+    if (trigger > 0) setAnimKey((k) => k + 1);
+  }, [trigger]);
+
+  const active = inView || trigger > 0;
 
   const layers = [
     [{ id: "i1", y: 30 }, { id: "i2", y: 60 }, { id: "i3", y: 90 }],
@@ -159,18 +135,16 @@ function FlowViz() {
 
   return (
     <div ref={ref} className="w-full h-full flex items-center justify-center">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-full max-h-[140px]">
-        {/* Edges */}
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-full max-h-[140px]" key={animKey}>
         {edges.map((e, i) => (
           <motion.line key={i}
             x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
             stroke="#ff3b1f" strokeOpacity="0.18" strokeWidth="1"
             initial={{ pathLength: 0, opacity: 0 }}
-            animate={inView ? { pathLength: 1, opacity: 1 } : {}}
+            animate={active ? { pathLength: 1, opacity: 1 } : {}}
             transition={{ delay: 0.1 + i * 0.015, duration: 0.4 }}
           />
         ))}
-        {/* Nodes */}
         {layers.map((layer, li) =>
           layer.map((node, ni) => (
             <motion.circle key={node.id}
@@ -179,13 +153,12 @@ function FlowViz() {
               fillOpacity={li === 1 ? 1 : 0.12}
               stroke="#ff3b1f" strokeWidth={li === 1 ? 0 : 1.5} strokeOpacity="0.5"
               initial={{ scale: 0 }}
-              animate={inView ? { scale: 1 } : {}}
+              animate={active ? { scale: 1 } : {}}
               style={{ transformOrigin: `${xPositions[li]}px ${node.y}px` }}
               transition={{ delay: 0.3 + li * 0.12 + ni * 0.05, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             />
           ))
         )}
-        {/* Layer labels */}
         {layerLabels.map((label, i) => (
           <text key={label} x={xPositions[i]} y={H - 2}
             textAnchor="middle" fontSize="6.5"
@@ -198,10 +171,16 @@ function FlowViz() {
   );
 }
 
-/* Radial / hub-and-spoke channels viz */
-function HubViz() {
+function HubViz({ trigger }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
+  const [animKey, setAnimKey] = useState(0);
+
+  useEffect(() => {
+    if (trigger > 0) setAnimKey((k) => k + 1);
+  }, [trigger]);
+
+  const active = inView || trigger > 0;
 
   const channels = [
     { label: "WhatsApp", angle: -90, color: "#7ad100" },
@@ -223,31 +202,28 @@ function HubViz() {
 
   return (
     <div ref={ref} className="w-full h-full flex items-center justify-center">
-      <svg viewBox="0 0 220 200" className="w-full h-full max-h-[170px]">
-        {/* Orbit ring */}
+      <svg viewBox="0 0 220 200" className="w-full h-full max-h-[170px]" key={animKey}>
         <motion.circle cx={CX} cy={CY} r={R} fill="none"
           stroke="#14121a" strokeOpacity="0.07" strokeWidth="1" strokeDasharray="3 3"
-          initial={{ pathLength: 0 }} animate={inView ? { pathLength: 1 } : {}}
+          initial={{ pathLength: 0 }} animate={active ? { pathLength: 1 } : {}}
           transition={{ duration: 0.8, ease: "easeOut" }} />
-        {/* Spokes */}
         {channels.map((ch, i) => {
           const pos = toXY(ch.angle);
           return (
             <motion.line key={ch.label}
               x1={CX} y1={CY} x2={pos.x} y2={pos.y}
               stroke={ch.color} strokeOpacity="0.25" strokeWidth="1.5"
-              initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
+              initial={{ opacity: 0 }} animate={active ? { opacity: 1 } : {}}
               transition={{ delay: 0.2 + i * 0.1 }} />
           );
         })}
-        {/* Channel dots + labels */}
         {channels.map((ch, i) => {
           const pos = toXY(ch.angle);
           const lpos = labelXY(ch.angle);
           return (
             <motion.g key={ch.label}
               initial={{ opacity: 0, scale: 0.4 }}
-              animate={inView ? { opacity: 1, scale: 1 } : {}}
+              animate={active ? { opacity: 1, scale: 1 } : {}}
               style={{ transformOrigin: `${pos.x}px ${pos.y}px` }}
               transition={{ delay: 0.25 + i * 0.1, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
               <circle cx={pos.x} cy={pos.y} r={10} fill={ch.color} fillOpacity="0.15" />
@@ -259,9 +235,8 @@ function HubViz() {
             </motion.g>
           );
         })}
-        {/* Centre hub */}
         <motion.circle cx={CX} cy={CY} r={20} fill="#ff3b1f"
-          initial={{ scale: 0 }} animate={inView ? { scale: 1 } : {}}
+          initial={{ scale: 0 }} animate={active ? { scale: 1 } : {}}
           style={{ transformOrigin: `${CX}px ${CY}px` }}
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} />
         <text x={CX} y={CY - 4} textAnchor="middle" dominantBaseline="middle"
@@ -273,10 +248,16 @@ function HubViz() {
   );
 }
 
-/* Dual-ring gauge: engineering vs bureaucracy */
-function GaugeViz() {
+function GaugeViz({ trigger }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
+  const [animKey, setAnimKey] = useState(0);
+
+  useEffect(() => {
+    if (trigger > 0) setAnimKey((k) => k + 1);
+  }, [trigger]);
+
+  const active = inView || trigger > 0;
   const SIZE = 100;
   const cx = SIZE / 2, cy = SIZE / 2;
 
@@ -286,7 +267,7 @@ function GaugeViz() {
   ];
 
   return (
-    <div ref={ref} className="flex items-center gap-6 w-full">
+    <div ref={ref} className="flex items-center gap-6 w-full" key={animKey}>
       <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="w-[90px] h-[90px] shrink-0">
         {rings.map(({ r, pct, color, strokeW }) => {
           const circ = 2 * Math.PI * r;
@@ -298,7 +279,7 @@ function GaugeViz() {
                 stroke={color} strokeWidth={strokeW} strokeLinecap="round"
                 strokeDasharray={circ}
                 initial={{ strokeDashoffset: circ }}
-                animate={inView ? { strokeDashoffset: circ * (1 - pct / 100) } : {}}
+                animate={active ? { strokeDashoffset: circ * (1 - pct / 100) } : {}}
                 transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
                 style={{ transformOrigin: `${cx}px ${cy}px`, rotate: -90 }} />
             </g>
@@ -325,8 +306,29 @@ function GaugeViz() {
   );
 }
 
+function ProgressBar({ label, val, fill, pct, trigger }) {
+  const [animKey, setAnimKey] = useState(0);
+
+  useEffect(() => {
+    if (trigger > 0) setAnimKey((k) => k + 1);
+  }, [trigger]);
+
+  return (
+    <div className="flex items-center gap-3">
+      <span className="font-mono text-[10px] text-mist uppercase tracking-wider w-28 shrink-0">{label}</span>
+      <div className="flex-1 h-[3px] bg-paper/6 rounded-full overflow-hidden">
+        <motion.div key={animKey} className="h-full rounded-full" style={{ backgroundColor: fill }}
+          initial={{ width: 0 }} whileInView={{ width: `${pct}%` }}
+          viewport={{ once: false, margin: "-40px" }}
+          transition={{ duration: 0.9, ease: "easeOut" }} />
+      </div>
+      <span className="font-mono text-[10px] font-bold text-paper w-12 text-right">{val}</span>
+    </div>
+  );
+}
+
 /* ────────────────────────────────────────────────
-   ICONS  (unique per card)
+   ICONS
 ──────────────────────────────────────────────── */
 
 const icons = {
@@ -382,7 +384,7 @@ const icons = {
 };
 
 /* ────────────────────────────────────────────────
-   CARDS
+   CARDS — each accepts `trigger` for hover replay
 ──────────────────────────────────────────────── */
 
 function CardHeader({ n, total, tag, icon }) {
@@ -399,8 +401,7 @@ function CardHeader({ n, total, tag, icon }) {
   );
 }
 
-/* Card 1 — Custom Built — large (3 cols) */
-function Card1() {
+function Card1({ trigger }) {
   return (
     <div className="flex flex-col h-full">
       <CardHeader n={1} total={5} tag="Foundation" icon={icons.brain} />
@@ -412,19 +413,19 @@ function Card1() {
       </p>
       <div className="mt-auto">
         <div className="rounded-xl bg-ink p-4 h-[130px]">
-          <FlowViz />
+          <FlowViz trigger={trigger} />
         </div>
         <div className="mt-4 flex items-center gap-6">
           <div>
             <span className="font-display text-[2.2rem] leading-none text-paper">
-              <Counter to={100} suffix="%" duration={1400} />
+              <Counter to={100} suffix="%" duration={1400} trigger={trigger} />
             </span>
             <p className="font-mono text-[9px] uppercase tracking-widest text-mist mt-0.5">Tailored</p>
           </div>
           <div className="h-10 w-px bg-paper/10" />
           <div>
             <span className="font-display text-[2.2rem] leading-none text-paper">
-              <Counter to={0} suffix="" duration={1000} />
+              <Counter to={0} suffix="" duration={1000} trigger={trigger} />
             </span>
             <p className="font-mono text-[9px] uppercase tracking-widest text-mist mt-0.5">Templates used</p>
           </div>
@@ -434,8 +435,7 @@ function Card1() {
   );
 }
 
-/* Card 2 — Every channel, one brain — medium (2 cols) */
-function Card2() {
+function Card2({ trigger }) {
   return (
     <div className="flex flex-col h-full">
       <CardHeader n={2} total={5} tag="Reach" icon={icons.channels} />
@@ -446,14 +446,13 @@ function Card2() {
         WhatsApp, email, SMS, live chat, voice — unified under one AI that knows your business context and never clocks out.
       </p>
       <div className="mt-auto rounded-xl bg-ink p-3 flex items-center justify-center min-h-[160px]">
-        <HubViz />
+        <HubViz trigger={trigger} />
       </div>
     </div>
   );
 }
 
-/* Card 3 — Lean & fast — bottom-left (2 cols) */
-function Card3() {
+function Card3({ trigger }) {
   return (
     <div className="flex flex-col h-full">
       <CardHeader n={3} total={5} tag="Speed" icon={icons.rocket} />
@@ -465,32 +464,18 @@ function Card3() {
       </p>
       <div className="mt-auto">
         <div className="rounded-xl bg-ink p-5 mb-5">
-          <GaugeViz />
+          <GaugeViz trigger={trigger} />
         </div>
         <div className="flex flex-col gap-2">
-          {[
-            { label: "Kickoff → Live", val: "7 days", fill: "#ff3b1f", pct: 85 },
-            { label: "Iteration cycle", val: "48 hrs", fill: "#ff3b1f", pct: 60 },
-          ].map(({ label, val, fill, pct }) => (
-            <div key={label} className="flex items-center gap-3">
-              <span className="font-mono text-[10px] text-mist uppercase tracking-wider w-28 shrink-0">{label}</span>
-              <div className="flex-1 h-[3px] bg-paper/6 rounded-full overflow-hidden">
-                <motion.div className="h-full rounded-full" style={{ backgroundColor: fill }}
-                  initial={{ width: 0 }} whileInView={{ width: `${pct}%` }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.9, ease: "easeOut" }} />
-              </div>
-              <span className="font-mono text-[10px] font-bold text-paper w-12 text-right">{val}</span>
-            </div>
-          ))}
+          <ProgressBar label="Kickoff → Live" val="7 days" fill="#ff3b1f" pct={85} trigger={trigger} />
+          <ProgressBar label="Iteration cycle" val="48 hrs" fill="#ff3b1f" pct={60} trigger={trigger} />
         </div>
       </div>
     </div>
   );
 }
 
-/* Card 4 — Revenue uplift — bottom-middle (2 cols) */
-function Card4() {
+function Card4({ trigger }) {
   const points = [8, 11, 9, 15, 13, 20, 17, 26, 22, 33, 29, 41, 37, 50, 48, 62, 58, 76];
   return (
     <div className="flex flex-col h-full">
@@ -503,18 +488,18 @@ function Card4() {
       </p>
       <div className="mt-auto">
         <div className="rounded-xl bg-ink p-3 mb-4 h-[100px]">
-          <Sparkline points={points} color="#ff3b1f" w={260} h={80} />
+          <Sparkline points={points} color="#ff3b1f" w={260} h={80} trigger={trigger} />
         </div>
         <div className="flex items-end gap-5">
           <div>
             <span className="font-display text-[2.5rem] leading-none text-paper">
-              <Counter to={70} suffix="%" duration={1500} />
+              <Counter to={70} suffix="%" duration={1500} trigger={trigger} />
             </span>
             <p className="font-mono text-[9px] uppercase tracking-widest text-mist mt-0.5">Time saved</p>
           </div>
           <div>
             <span className="font-display text-[2.5rem] leading-none text-paper">
-              <Counter to={10} suffix="×" duration={1200} />
+              <Counter to={10} suffix="×" duration={1200} trigger={trigger} />
             </span>
             <p className="font-mono text-[9px] uppercase tracking-widest text-mist mt-0.5">Throughput</p>
           </div>
@@ -524,8 +509,20 @@ function Card4() {
   );
 }
 
-/* Card 5 — You own everything — bottom-right narrow (1 col) */
-function Card5() {
+function Card5({ trigger }) {
+  const [animKey, setAnimKey] = useState(0);
+
+  useEffect(() => {
+    if (trigger > 0) setAnimKey((k) => k + 1);
+  }, [trigger]);
+
+  const items = [
+    { label: "Source code", tag: "100% yours" },
+    { label: "Your data", tag: "100% yours" },
+    { label: "Infrastructure", tag: "100% yours" },
+    { label: "Zero vendor lock", tag: "guaranteed" },
+  ];
+
   return (
     <div className="flex flex-col h-full">
       <CardHeader n={5} total={5} tag="Ownership" icon={icons.lock} />
@@ -536,19 +533,42 @@ function Card5() {
         No subscriptions. No lock-in. Every line of code, every workflow, every data point — deeded to you on day one.
       </p>
       <div className="mt-auto rounded-xl bg-ink p-4 flex flex-col gap-0">
-        {[
-          { label: "Source code", tag: "100% yours" },
-          { label: "Your data", tag: "100% yours" },
-          { label: "Infrastructure", tag: "100% yours" },
-          { label: "Zero vendor lock", tag: "guaranteed" },
-        ].map(({ label, tag }) => (
-          <div key={label} className="flex items-center justify-between py-2.5 border-b border-paper/8 last:border-0">
+        {items.map(({ label, tag }, i) => (
+          <motion.div
+            key={`${label}-${animKey}`}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, margin: "-20px" }}
+            transition={{ duration: 0.4, delay: i * 0.08 }}
+            className="flex items-center justify-between py-2.5 border-b border-paper/8 last:border-0"
+          >
             <span className="font-sans text-xs text-paper">{label}</span>
             <span className="font-mono text-[9px] uppercase tracking-widest text-vermilion font-bold">{tag}</span>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
+  );
+}
+
+/* ────────────────────────────────────────────────
+   HOVER WRAPPER — increments trigger on mouseEnter
+──────────────────────────────────────────────── */
+
+function HoverCard({ children, className }) {
+  const [trigger, setTrigger] = useState(0);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.55 }}
+      className={className}
+      onMouseEnter={() => setTrigger((t) => t + 1)}
+    >
+      {children(trigger)}
+    </motion.div>
   );
 }
 
@@ -565,7 +585,6 @@ export default function Advantages() {
       className="px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 py-16 sm:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-[1400px]">
-        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -581,43 +600,30 @@ export default function Advantages() {
           </h2>
         </motion.div>
 
-        {/*
-          Desktop (lg): 5-column grid
-            Row 1: [Card1 — 3 cols] [Card2 — 2 cols]   ← tall (~380px)
-            Row 2: [Card3 — 2 cols] [Card4 — 2 cols] [Card5 — 1 col]  ← medium (~320px)
-          Tablet (sm): 2-col
-          Mobile: 1-col
-        */}
+        {/* Row 1: Card1 (3 cols) + Card2 (2 cols) — unchanged */}
+        {/* Row 2: Card3 + Card4 + Card5 — 9fr + 9fr + 7fr via custom grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.55, delay: 0.04 }}
-            className={`${base} lg:col-span-3 min-h-[360px]`}>
-            <Card1 />
-          </motion.div>
+          <HoverCard className={`${base} lg:col-span-3 min-h-[360px]`}>
+            {(t) => <Card1 trigger={t} />}
+          </HoverCard>
 
-          <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.55, delay: 0.10 }}
-            className={`${base} lg:col-span-2 min-h-[360px]`}>
-            <Card2 />
-          </motion.div>
+          <HoverCard className={`${base} lg:col-span-2 min-h-[360px]`}>
+            {(t) => <Card2 trigger={t} />}
+          </HoverCard>
+        </div>
 
-          <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.55, delay: 0.16 }}
-            className={`${base} lg:col-span-2 min-h-[300px]`}>
-            <Card3 />
-          </motion.div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[9fr_9fr_7fr] gap-4 mt-4">
+          <HoverCard className={`${base} min-h-[300px]`}>
+            {(t) => <Card3 trigger={t} />}
+          </HoverCard>
 
-          <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.55, delay: 0.22 }}
-            className={`${base} lg:col-span-2 min-h-[300px]`}>
-            <Card4 />
-          </motion.div>
+          <HoverCard className={`${base} min-h-[300px]`}>
+            {(t) => <Card4 trigger={t} />}
+          </HoverCard>
 
-          <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.55, delay: 0.28 }}
-            className={`${base} lg:col-span-1 min-h-[300px]`}>
-            <Card5 />
-          </motion.div>
+          <HoverCard className={`${base} sm:col-span-2 lg:col-span-1 min-h-[300px]`}>
+            {(t) => <Card5 trigger={t} />}
+          </HoverCard>
         </div>
       </div>
     </section>

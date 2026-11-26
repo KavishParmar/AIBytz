@@ -181,3 +181,165 @@
     opacity: 0;
   }
 }
+
+/* Loading screen: fade-in after preloader exits */
+.main-active {
+  opacity: 0;
+  animation: loadFadeIn 1s 1 forwards;
+}
+
+@keyframes loadFadeIn {
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ─── Career / Process Timeline ─── */
+
+.career-section {
+  overflow-x: hidden;
+}
+
+.career-info {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 24px 60px;
+}
+
+.career-timeline {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 100%;
+  max-height: 0;
+  overflow: visible;
+  background: linear-gradient(
+    to top,
+    #ff3b1f 20%,
+    #ff3b1f 50%,
+    transparent 95%
+  );
+  border-radius: 999px;
+}
+
+.career-dot {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ff3b1f;
+  box-shadow:
+    0px 0px 5px 2px rgba(255, 59, 31, 0.5),
+    0px 0px 15px 8px rgba(255, 59, 31, 0.3),
+    0px 0px 110px 20px rgba(255, 59, 31, 0.15);
+}
+
+/* Each row: left card | center gap | right card */
+.career-info-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 60px;
+  gap: 0;
+}
+
+.career-info-row-left {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 52px;
+}
+
+.career-info-row-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 52px;
+}
+
+.career-info-box {
+  position: relative;
+  max-width: 420px;
+  width: 100%;
+  opacity: 0;
+}
+
+.career-info-box-inner {
+  background: #ffffff;
+  border: 1px solid #e8e6e0;
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+  text-align: left;
+}
+
+.career-info-box-arm {
+  position: absolute;
+  top: 50%;
+  width: 52px;
+  height: 2px;
+  background: rgba(255, 59, 31, 0.4);
+}
+
+.career-info-row-left .career-info-box-arm {
+  right: -52px;
+}
+
+.career-info-row-right .career-info-box-arm {
+  left: -52px;
+}
+
+/* ─── Mobile timeline ─── */
+
+.career-section-mobile .career-info-mobile {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-left: 40px;
+}
+
+.career-section-mobile .career-timeline {
+  left: 16px;
+  transform: none;
+  width: 3px;
+}
+
+.career-section-mobile .career-dot {
+  width: 12px;
+  height: 12px;
+  bottom: -6px;
+}
+
+.career-section-mobile .career-info-box {
+  width: 100%;
+  margin-left: 0;
+  margin-bottom: 32px;
+}
+
+.career-section-mobile .career-info-box-arm {
+  left: -28px;
+  width: 28px;
+}
+
+@keyframes career-dot-pulse {
+  0%, 100% {
+    box-shadow:
+      0px 0px 5px 2px rgba(255, 59, 31, 0.5),
+      0px 0px 15px 8px rgba(255, 59, 31, 0.3),
+      0px 0px 110px 20px rgba(255, 59, 31, 0.15);
+  }
+  50% {
+    box-shadow:
+      0px 0px 8px 4px rgba(255, 59, 31, 0.6),
+      0px 0px 25px 12px rgba(255, 59, 31, 0.4),
+      0px 0px 130px 30px rgba(255, 59, 31, 0.2);
+  }
+}
+
+.career-dot {
+  animation: career-dot-pulse 2s ease-in-out infinite;
+}

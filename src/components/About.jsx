@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Link } from "react-router-dom";
+import TransitionLink from "./TransitionLink";
 import content from "../content/site.json";
 
 function Counter({ to, suffix = "", duration = 1400 }) {
@@ -102,13 +102,14 @@ export default function About() {
             </h2>
           </div>
 
-          <Link
+          <TransitionLink
             to="/about"
+            label="About"
             className="hidden sm:inline-flex items-center gap-2 rounded-full bg-paper text-ink px-6 py-3 text-xs font-mono uppercase tracking-widest hover:bg-sunflower transition-colors shrink-0"
           >
             Full story
             <span aria-hidden>&rarr;</span>
-          </Link>
+          </TransitionLink>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5">
@@ -151,12 +152,14 @@ export default function About() {
                   <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
                 </svg>
               </a>
-              <a href={about.founder.linkedin} target="_blank" rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-ink/5 flex items-center justify-center hover:bg-cobalt hover:text-ink transition-colors">
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
-                </svg>
-              </a>
+              {about.founder.linkedin && about.founder.linkedin !== "#" && (
+                <a href={about.founder.linkedin} target="_blank" rel="noreferrer"
+                  className="w-8 h-8 rounded-full bg-ink/5 flex items-center justify-center hover:bg-cobalt hover:text-ink transition-colors">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
+                  </svg>
+                </a>
+              )}
             </div>
           </motion.div>
 
@@ -231,13 +234,14 @@ export default function About() {
           transition={{ duration: 0.5, delay: 0.15 }}
           className="mt-6 sm:hidden"
         >
-          <Link
+          <TransitionLink
             to="/about"
+            label="About"
             className="flex items-center justify-center gap-2 w-full rounded-full bg-paper text-ink px-6 py-4 text-sm font-mono uppercase tracking-widest hover:bg-sunflower transition-colors"
           >
             Full story
             <span aria-hidden>&rarr;</span>
-          </Link>
+          </TransitionLink>
         </motion.div>
       </div>
     </section>

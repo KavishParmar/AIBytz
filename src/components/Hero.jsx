@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Link } from "react-router-dom";
+import TransitionLink from "./TransitionLink";
 import content from "../content/site.json";
 import FallingWords from "./FallingWords";
 import { useHoverScramble, ScrambleChars } from "./HoverScrambleText";
@@ -117,13 +117,14 @@ export default function Hero() {
             <p className="max-w-md text-paper text-sm sm:text-base font-black normal-case">{hero.subhead}</p>
 
             <div className="flex flex-wrap items-center gap-3">
-              <Link
+              <TransitionLink
                 to="/contact"
+                label="Contact"
                 className="inline-flex items-center gap-3 rounded-full bg-paper text-ink px-6 py-3 font-mono text-xs uppercase tracking-widest hover:bg-sunflower transition-colors"
               >
                 Book a free audit
                 <span aria-hidden>→</span>
-              </Link>
+              </TransitionLink>
             </div>
           </motion.div>
         </div>

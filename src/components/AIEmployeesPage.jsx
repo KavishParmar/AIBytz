@@ -1,5 +1,5 @@
 ﻿import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import TransitionLink from "./TransitionLink";
 import SEO from "./SEO";
 import Nav from "./Nav";
 import Footer from "./Footer";
@@ -297,8 +297,9 @@ function EmployeeCard({ employee, index }) {
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay: index * 0.07 }}
     >
-      <Link
+      <TransitionLink
         to={`/ai-employees/${employee.slug}`}
+        label={employee.name}
         className="group relative flex flex-col bg-white rounded-2xl border border-[#e0ddd6] overflow-hidden h-full hover:shadow-[0_16px_48px_rgba(0,0,0,0.1)] hover:-translate-y-1.5 transition-all duration-300"
       >
         {/* Status badge */}
@@ -372,7 +373,7 @@ function EmployeeCard({ employee, index }) {
             </span>
           </div>
         </div>
-      </Link>
+      </TransitionLink>
     </motion.div>
   );
 }
@@ -486,13 +487,14 @@ function EmployeesCTA() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex flex-col items-center gap-6"
         >
-          <Link
+          <TransitionLink
             to="/contact"
+            label="Contact"
             className="group relative inline-flex items-center gap-3 rounded-full bg-white text-vermilion px-10 py-5 sm:px-14 sm:py-6 font-mono text-sm sm:text-base uppercase tracking-widest font-bold hover:bg-paper hover:text-ink transition-colors duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.15)]"
           >
             Book a Strategy Call
             <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
-          </Link>
+          </TransitionLink>
 
           <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/50">
             &#9679;&ensp;Available globally&ensp;&#9679;
