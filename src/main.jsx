@@ -20,6 +20,7 @@ import ProtectedRoute from "./admin/ProtectedRoute";
 import NotFound from "./components/NotFound";
 import useCopyGuard from "./components/useCopyGuard";
 import BackToTop from "./components/BackToTop";
+import ChatWidget from "./components/ChatWidget";
 import { LoadingProvider } from "./context/LoadingProvider";
 import { NavigationTransitionProvider } from "./context/NavigationTransition";
 
@@ -41,6 +42,7 @@ createRoot(document.getElementById("root")).render(
           <NavigationTransitionProvider>
             <CopyGuard />
             <BackToTop />
+            <ChatWidget />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<AboutPage />} />

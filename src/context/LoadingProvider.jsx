@@ -5,16 +5,15 @@ const LoadingContext = createContext(null);
 
 export function LoadingProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [loading, setLoading] = useState(0);
+  const [loading, setLoading] = useState(
+    document.readyState === "complete" ? 100 : 0
+  );
 
   useEffect(() => {
+    if (document.readyState === "complete") return;
     const onReady = () => setLoading(100);
-    if (document.readyState === "complete") {
-      onReady();
-    } else {
-      window.addEventListener("load", onReady);
-      return () => window.removeEventListener("load", onReady);
-    }
+    window.addEventListener("load", onReady);
+    return () => window.removeEventListener("load", onReady);
   }, []);
 
   const value = { isLoading, setIsLoading, setLoading };

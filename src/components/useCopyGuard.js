@@ -14,16 +14,28 @@ const isEditable = (el) =>
     el.tagName === "SELECT" ||
     el.isContentEditable);
 
+const isInChat = (el) => {
+  // Walk up — handle text nodes
+  let node = el instanceof Element ? el : el?.parentElement;
+  while (node) {
+    if (node.dataset && "chat" in node.dataset) return true;
+    node = node.parentElement;
+  }
+  return false;
+};
+
 export default function useCopyGuard(enabled = true) {
   useEffect(() => {
     if (!enabled) return;
     const blockUnlessEditable = (e) => {
       if (isEditable(e.target)) return;
+      if (isInChat(e.target)) return;
       e.preventDefault();
     };
 
     const onKeyDown = (e) => {
       if (isEditable(e.target)) return;
+      if (isInChat(e.target)) return;
       const mod = e.ctrlKey || e.metaKey;
       if (!mod) return;
       const k = e.key.toLowerCase();

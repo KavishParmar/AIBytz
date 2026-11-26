@@ -29,8 +29,8 @@
 }
 
 .back-to-top:hover {
-  border-color: var(--color-acid);
-  box-shadow: 0 0 16px rgba(122, 209, 0, 0.2);
+  border-color: var(--color-vermilion);
+  box-shadow: 0 0 16px rgba(255, 59, 31, 0.3);
   scale: 1.1;
-  color: var(--color-acid);
+  color: var(--color-vermilion);
 }
